@@ -1,0 +1,66 @@
+<html>
+	<head>
+		<title>服务器分页</title>
+		<meta charset="UTF-8" />
+		<script src="jquery-3.5.1.js"></script>
+		<script src="../dist/bootstrap.bundle.js" ></script>
+		<script src="../dist/bootstrap-table.js" ></script>
+		<script src="../dist/locale/bootstrap-table-zh-CN.js"></script>
+		<link rel="stylesheet" type="text/css" href="../dist/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="../dist/bootstrap-table.css" /> 
+		<link rel="stylesheet" type="text/css" href="fontawesome/css/all.css">
+		<script type="text/javascript">
+			$(function(){
+				$('#table').bootstrapTable({
+					url:'poet.tang.0.json',
+					method:'post',
+					dataType:'json',
+					// height:610, //当没有给指定高度时，自适应高度，指定高度超出内容高度时，最底下会出现不对齐的边框，所以最好不指定高度
+					pagination:true,
+					// onlyInfoPagination:true,
+					showFullscreen:true,//是否显示全屏展示(默认false)
+					pageSize:10,//默认每页数量
+					dataField:'rows',//数据对应对象字段（可自定义）
+					totalField:'total',//总数量对应的字段（可自定义）
+					pageList:[10,20,50,100],//每页显示数量集合
+					sidePagination:'server',//分页模式（client:本地分页模式,server:服务端分页）
+					showFooter:false,//显示页脚，可自定义页脚样式、内容
+					// idField:'id',
+					columns:[{
+					 	// field: 'id',
+			          	checkbox: true, //使用checkbox展示列时，不要绑定在此绑定字段，会造成首页默认全选，应使用
+			          	// rowspan: 1,
+						title:'ID',
+			          	align: 'center'
+					},{
+					 	field: 'title',
+						title:'名称',
+						titleTooltip:'名称',
+			          	align: 'center'
+					},{
+						field: 'author',
+						title:'作者',
+						align: 'center'
+					},{
+						field:'paragraphs',
+						title:'内容',
+						align:'left',
+						formatter:function (value,row,index,field) {
+							return value[0]+value[1]+'...';
+						}
+					}]
+				});
+			});
+		</script>
+		<style type="text/css">
+			body{
+				padding: 50px 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<table id="table" ></table>
+		</div>
+	</body>
+</html>
