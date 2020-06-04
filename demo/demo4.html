@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Table导出</title>
+    <script src="jquery-3.5.1.js" type="text/javascript"></script>
+    <script src="../dist/bootstrap.bundle.js" type="text/javascript"></script>
+    <script src="../dist/bootstrap-table.js" type="text/javascript"></script>
+    <script src="../dist/extensions/export/bootstrap-table-export.js" type="text/javascript"></script>
+    <script src="../dist/locale/bootstrap-table-zh-CN.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="../dist/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../dist/bootstrap-table.css" />
+    <link rel="stylesheet" type="text/css" href="fontawesome/css/all.css">
+    <style type="text/css">
+        body{
+            padding: 50px 0;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            // 不要使用div容器初始化，会有样式问题
+            let table=$('#table').bootstrapTable({
+                url:'poet.tang.0.json',
+                method:'post',
+                dataType:'json',
+                pagination:true,
+                pageSize:10,//默认每页数量
+                dataField:'rows',//数据对应对象字段（可自定义）
+                totalField:'total',//总数量对应的字段（可自定义）
+                pageList:[10,20,50,100],//每页显示数量集合
+                sidePagination:'client',//分页模式（client:本地分页模式,server:服务端分页）
+                showExport:true,//显示导出
+                columns:[
+                    {
+                        checkbox: true, //使用checkbox展示列时，不要绑定在此绑定字段，会造成首页默认全选，应使用
+                        align: 'center'
+                    },{
+                        title:'ID',
+                        align:'center',
+                        formatter:function (value, row, index, field) {
+                            return index+1;
+                        }
+                    },{
+                        field: 'title',
+                        title:'名称',
+                        titleTooltip:'名称',
+                        align: 'center'
+                    },{
+                        field: 'author',
+                        title:'作者',
+                        align: 'center'
+                    },{
+                        field:'paragraphs',
+                        title:'内容',
+                        align:'left',
+                        formatter:function (value,row,index,field) {
+                            return value[0]+value[1]+'...';
+                        }
+                    },{
+                        title:'操作',
+                        align:'center',
+                        formatter:function (value,row,index,field) {
+                            return '<a class="btn btn-success btn-sm text-danger edit">编辑</a>'+
+                                '<a class="btn btn-success btn-sm text-dark delete">删除</a>';
+                        },
+                        events:{
+                            'click .edit':function(event,value,row,index){
+                                console.info(event);
+                                console.info(value);
+                                console.info(row);
+                                console.info(index);
+                            },
+                            'click .delete':function(event,value,row,index){
+                                console.info(event);
+                                console.info(value);
+                                console.info(row);
+                                console.info(index);
+                            }
+                        }
+                    }]
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="container">
+    <table id="table"></table>
+</div>
+</body>
+</html>

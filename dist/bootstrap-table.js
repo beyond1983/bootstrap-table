@@ -1,4 +1,5 @@
-(function (global, factory) {
+(
+	function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('jquery')) :
 	typeof define === 'function' && define.amd ? define(['jquery'], factory) :
 	(global = global || self, global.BootstrapTable = factory(global.jQuery));
